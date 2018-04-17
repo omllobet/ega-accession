@@ -44,25 +44,28 @@ public class FileBasicAccessioningServiceTest {
 
     @Test
     public void sameAccessionsAreReturnedForIdenticalFiles() throws Exception {
-        String checksumA = "checksumA";
-        String checksumB = "checksumB";
-        FileModel fileA = new FileDTO(checksumA);
-        FileModel fileB = new FileDTO(checksumB);
+        String checksumA = "checksumAAAAAAAAAAAAAAAAAAAAAAAA";
+        String checksumB = "checksumBBBBBBBBBBBBBBBBBBBBBBBB";
+        FileModel fileA = new FileDTO(HashType.MD5, checksumA);
+        FileModel fileB = new FileDTO(HashType.MD5, checksumB);
 
-        Map<String, FileModel> generatedAccessions = accessioningService.getOrCreateAccessions(Arrays.asList(fileA, fileB));
+        Map<String, FileModel> generatedAccessions = accessioningService.
+                getOrCreateAccessions(Arrays.asList(fileA, fileB));
 
-        fileA = new FileDTO(checksumA);
-        fileB = new FileDTO(checksumB);
+        fileA = new FileDTO(HashType.MD5, checksumA);
+        fileB = new FileDTO(HashType.MD5, checksumB);
 
-        Map<String, FileModel> retrievedAccessions = accessioningService.getOrCreateAccessions(Arrays.asList(fileA, fileB));
+        Map<String, FileModel> retrievedAccessions = accessioningService.
+                getOrCreateAccessions(Arrays.asList(fileA, fileB));
 
         assertEquals(generatedAccessions.keySet(), retrievedAccessions.keySet());
     }
 
     @Test
     public void everyNewObjectReceiveOneAccession() throws Exception {
-        List<FileDTO> newObjects = Arrays.asList(new FileDTO("checksumA"),
-                new FileDTO("checksumB"), new FileDTO("checksumC"));
+        List<FileDTO> newObjects = Arrays.asList(new FileDTO(HashType.MD5, "checksumAAAAAAAAAAAAAAAAAAAAAAAA"),
+                new FileDTO(HashType.MD5, "checksumBBBBBBBBBBBBBBBBBBBBBBBB"), new FileDTO(HashType.MD5,
+                        "checksumCCCCCCCCCCCCCCCCCCCCCCCC"));
         Map<String, FileModel> accessions = accessioningService.getOrCreateAccessions(newObjects);
 
         assertEquals(3, accessions.size());
@@ -71,8 +74,8 @@ public class FileBasicAccessioningServiceTest {
 
     @Test
     public void sameObjectsGetSameAccession() throws Exception {
-        FileDTO fileA = new FileDTO("checksumA");
-        FileDTO fileB = new FileDTO("checksumA");
+        FileDTO fileA = new FileDTO(HashType.MD5, "checksumAAAAAAAAAAAAAAAAAAAAAAAA");
+        FileDTO fileB = new FileDTO(HashType.MD5, "checksumAAAAAAAAAAAAAAAAAAAAAAAA");
 
         List<FileDTO> newObjects = Arrays.asList(fileA, fileB);
         Map<String, FileModel> accessions = accessioningService.getOrCreateAccessions(newObjects);
@@ -82,8 +85,8 @@ public class FileBasicAccessioningServiceTest {
 
     @Test
     public void differentObjectsGetDifferentAccessions() throws Exception {
-        FileDTO fileA = new FileDTO("checksumA");
-        FileDTO fileB = new FileDTO("checksumB");
+        FileDTO fileA = new FileDTO(HashType.MD5, "checksumAAAAAAAAAAAAAAAAAAAAAAAA");
+        FileDTO fileB = new FileDTO(HashType.MD5, "checksumBBBBBBBBBBBBBBBBBBBBBBBB");
         List<FileDTO> newObjects = Arrays.asList(fileA, fileB);
         Map<String, FileModel> accessions = accessioningService.getOrCreateAccessions(newObjects);
 
@@ -92,11 +95,12 @@ public class FileBasicAccessioningServiceTest {
 
     @Test
     public void mixingAlreadyAccessionedAndNewObjectsIsAllowed() throws Exception {
-        FileDTO fileA = new FileDTO("checksumA");
-        FileDTO fileB = new FileDTO("checksumB");
-        Map<String, FileModel> accessionsFromFirstServiceCall = accessioningService.getOrCreateAccessions(Arrays.asList(fileA, fileB));
-        FileDTO fileC = new FileDTO("checksumC");
-        FileDTO fileD = new FileDTO("checksumD");
+        FileDTO fileA = new FileDTO(HashType.MD5, "checksumAAAAAAAAAAAAAAAAAAAAAAAA");
+        FileDTO fileB = new FileDTO(HashType.MD5, "checksumBBBBBBBBBBBBBBBBBBBBBBBB");
+        Map<String, FileModel> accessionsFromFirstServiceCall = accessioningService.
+                getOrCreateAccessions(Arrays.asList(fileA, fileB));
+        FileDTO fileC = new FileDTO(HashType.MD5, "checksumCCCCCCCCCCCCCCCCCCCCCCCC");
+        FileDTO fileD = new FileDTO(HashType.MD5, "checksumDDDDDDDDDDDDDDDDDDDDDDDD");
         List<FileDTO> objectsToAccession = Arrays.asList(fileA, fileB, fileC, fileD);
         Map<String, FileModel> accessionsFromSecondServiceCall = accessioningService
                 .getOrCreateAccessions(objectsToAccession);

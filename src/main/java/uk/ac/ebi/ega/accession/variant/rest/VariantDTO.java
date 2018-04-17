@@ -20,16 +20,23 @@ package uk.ac.ebi.ega.accession.variant.rest;
 import uk.ac.ebi.ega.accession.variant.VariantModel;
 import uk.ac.ebi.ega.accession.variant.VariantType;
 
+import javax.validation.constraints.NotNull;
+
 public class VariantDTO implements VariantModel {
 
+    @NotNull(message = "Variant assemblyAccession should not be null")
     private String assemblyAccession;
 
+    @NotNull(message = "Variant projectAccession should not be null")
     private String projectAccession;
 
+    @NotNull(message = "Variant chromosome should not be null")
     private String chromosome;
 
+    @NotNull(message = "Variant start should not be null")
     private long start;
 
+    @NotNull(message = "Variant Type should not be null")
     private VariantType type;
 
     VariantDTO() {

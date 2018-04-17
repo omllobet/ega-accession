@@ -19,16 +19,16 @@ package uk.ac.ebi.ega.accession.file.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uk.ac.ebi.ampt2d.commons.accession.rest.BasicRestController;
 import uk.ac.ebi.ega.accession.file.FileAccessioningService;
 import uk.ac.ebi.ega.accession.file.FileModel;
-import uk.ac.ebi.ampt2d.commons.accession.rest.BasicRestController;
 
 @RestController
 @RequestMapping(value = "/v1/file")
 public class FileRestController extends BasicRestController<FileModel, FileDTO, String> {
 
     public FileRestController(FileAccessioningService fileAccessioningService) {
-        super(fileAccessioningService, fileModel -> new FileDTO(fileModel.getHash()));
+        super(fileAccessioningService, fileModel -> new FileDTO(fileModel.getHashType(), fileModel.getHash()));
     }
 
 }

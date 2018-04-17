@@ -24,8 +24,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.transaction.TestTransaction;
-import uk.ac.ebi.ega.accession.file.persistence.FileEntity;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningRepository;
+import uk.ac.ebi.ega.accession.file.persistence.FileEntity;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -42,11 +42,11 @@ public class FileAccessioningRepositoryTest {
     @Autowired
     private AccessioningRepository fileAccessioningRepository;
 
-    private FileEntity generateFileEntity(int value){
-        return new FileEntity("file"+value,"file"+value);
+    private FileEntity generateFileEntity(int value) {
+        return new FileEntity(HashType.MD5, "file" + value, "fileAAAAAAAAAAAAAAAAAAAAAAAAAAA" + value);
     }
 
-    private Set<FileEntity> generateEntities(){
+    private Set<FileEntity> generateEntities() {
         Set<FileEntity> accessionObjects = new HashSet<>();
         accessionObjects.add(generateFileEntity(1));
         accessionObjects.add(generateFileEntity(2));
@@ -78,13 +78,13 @@ public class FileAccessioningRepositoryTest {
 
     @Test(expected = org.springframework.orm.jpa.JpaSystemException.class)
     public void testSavingObjectsWithoutAccession() throws Exception {
-        fileAccessioningRepository.save(new FileEntity("file1", null));
+        fileAccessioningRepository.save(new FileEntity(HashType.MD5, null, "file1"));
     }
 
-    @Test(expected = org.springframework.dao.DataIntegrityViolationException.class)
+    @Test(expected = org.springframework.transaction.TransactionSystemException.class)
     @Commit
     public void testSavingObjectsWithoutHash() throws Exception {
-        fileAccessioningRepository.save(new FileEntity(null, "accession"));
+        fileAccessioningRepository.save(new FileEntity(HashType.MD5, "accession", null));
         TestTransaction.end();
     }
 }

@@ -17,29 +17,24 @@
  */
 package uk.ac.ebi.ega.accession.file.rest;
 
-import uk.ac.ebi.ega.accession.file.FileModel;
-import uk.ac.ebi.ega.accession.file.HashType;
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@ValidHash
-public class FileDTO implements FileModel {
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = HashValidator.class)
+@Documented
+public @interface ValidHash {
 
-    private HashType hashType;
+    String message() default "Please provide a valid hashType and hash";
 
-    private String hash;
+    Class<?>[] groups() default {};
 
-    FileDTO() {
-    }
+    Class<? extends Payload>[] payload() default {};
 
-    public FileDTO(HashType hashType, String hash) {
-        this.hashType = hashType;
-        this.hash = hash;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public HashType getHashType() {
-        return hashType;
-    }
 }

@@ -23,9 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
+import uk.ac.ebi.ampt2d.commons.accession.generators.ModelHashAccession;
 import uk.ac.ebi.ega.accession.file.persistence.FileAccessioningDatabaseService;
 import uk.ac.ebi.ega.accession.file.rest.FileDTO;
-import uk.ac.ebi.ampt2d.commons.accession.generators.ModelHashAccession;
 import uk.ac.ebi.ega.test.configuration.FileAccessioningServiceTestConfiguration;
 
 import java.util.Arrays;
@@ -40,8 +40,8 @@ import static org.junit.Assert.assertTrue;
 @Import(FileAccessioningServiceTestConfiguration.class)
 public class FileAccessioningDatabaseServiceTest {
 
-    private static final String CHECKSUM_A = "checksumA";
-    private static final String CHECKSUM_B = "checksumB";
+    private static final String CHECKSUM_A = "checksumAAAAAAAAAAAAAAAAAAAAAAAA";
+    private static final String CHECKSUM_B = "checksumBBBBBBBBBBBBBBBBBBBBBBBB";
 
     @Autowired
     private FileAccessioningDatabaseService databaseService;
@@ -49,8 +49,8 @@ public class FileAccessioningDatabaseServiceTest {
     @Test
     public void testFileAccessionsAreStoredInTheRepositoryAndRetrived() throws Exception {
         List<ModelHashAccession<FileModel, String, String>> fileAccessionsToStore = Arrays.asList(
-                ModelHashAccession.of((FileModel) new FileDTO(CHECKSUM_A), CHECKSUM_A, CHECKSUM_A),
-                ModelHashAccession.of((FileModel) new FileDTO(CHECKSUM_B), CHECKSUM_B, CHECKSUM_B)
+                ModelHashAccession.of((FileModel) new FileDTO(HashType.MD5, CHECKSUM_A), CHECKSUM_A, CHECKSUM_A),
+                ModelHashAccession.of((FileModel) new FileDTO(HashType.MD5, CHECKSUM_B), CHECKSUM_B, CHECKSUM_B)
         );
 
         databaseService.save(fileAccessionsToStore);
@@ -66,8 +66,8 @@ public class FileAccessioningDatabaseServiceTest {
     @Test
     public void addingTheSameFilesWithSameAccessionsTwiceOverwritesObject() throws Exception {
         List<ModelHashAccession<FileModel, String, String>> fileAccessionsToStore = Arrays.asList(
-                ModelHashAccession.of((FileModel) new FileDTO(CHECKSUM_A), CHECKSUM_A, CHECKSUM_A),
-                ModelHashAccession.of((FileModel) new FileDTO(CHECKSUM_B), CHECKSUM_B, CHECKSUM_B)
+                ModelHashAccession.of((FileModel) new FileDTO(HashType.MD5, CHECKSUM_A), CHECKSUM_A, CHECKSUM_A),
+                ModelHashAccession.of((FileModel) new FileDTO(HashType.MD5, CHECKSUM_B), CHECKSUM_B, CHECKSUM_B)
         );
 
         databaseService.save(fileAccessionsToStore);
@@ -85,8 +85,8 @@ public class FileAccessioningDatabaseServiceTest {
     @Test(expected = org.springframework.orm.jpa.JpaSystemException.class)
     public void cantStoreFileWithoutAccession() {
         List<ModelHashAccession<FileModel, String, String>> fileAccessionsToStore = Arrays.asList(
-                ModelHashAccession.of((FileModel) new FileDTO(CHECKSUM_A), CHECKSUM_A, null),
-                ModelHashAccession.of((FileModel) new FileDTO(CHECKSUM_B), CHECKSUM_B, CHECKSUM_B)
+                ModelHashAccession.of((FileModel) new FileDTO(HashType.MD5, CHECKSUM_A), CHECKSUM_A, null),
+                ModelHashAccession.of((FileModel) new FileDTO(HashType.MD5, CHECKSUM_B), CHECKSUM_B, CHECKSUM_B)
         );
 
         databaseService.save(fileAccessionsToStore);

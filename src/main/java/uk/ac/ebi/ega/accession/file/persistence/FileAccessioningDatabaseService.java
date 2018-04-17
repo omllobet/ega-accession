@@ -21,11 +21,12 @@ import uk.ac.ebi.ega.accession.file.FileModel;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningRepository;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.BasicSpringDataRepositoryDatabaseService;
 
-public class FileAccessioningDatabaseService extends BasicSpringDataRepositoryDatabaseService<FileModel, FileEntity, String, String> {
+public class FileAccessioningDatabaseService extends
+                         BasicSpringDataRepositoryDatabaseService<FileModel, FileEntity, String, String> {
 
     public FileAccessioningDatabaseService(AccessioningRepository<FileEntity, String, String> repository) {
         super(repository,
-                mha -> new FileEntity(mha.hash(), mha.accession()),
+                mha -> new FileEntity(mha.model().getHashType(),mha.accession(), mha.hash()),
                 FileEntity::getAccession,
                 FileEntity::getHashedMessage);
     }

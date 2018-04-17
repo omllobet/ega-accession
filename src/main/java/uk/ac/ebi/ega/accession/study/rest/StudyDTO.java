@@ -19,10 +19,12 @@ package uk.ac.ebi.ega.accession.study.rest;
 
 import uk.ac.ebi.ega.accession.study.StudyModel;
 
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 public class StudyDTO implements StudyModel {
 
+    @NotNull(message = "Study properties should not be null")
     private Map<String, String> studyProperties;
 
     StudyDTO() {

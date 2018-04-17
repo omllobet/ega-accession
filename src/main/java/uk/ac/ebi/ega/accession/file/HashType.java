@@ -15,28 +15,8 @@
  * limitations under the License.
  *
  */
-package uk.ac.ebi.ega.accession.sample.rest;
+package uk.ac.ebi.ega.accession.file;
 
-import uk.ac.ebi.ega.accession.sample.SampleModel;
-
-import javax.validation.constraints.NotNull;
-import java.util.Map;
-
-public class SampleDTO implements SampleModel {
-
-    @NotNull(message = "Sample properties should not be null")
-    private Map<String, String> sampleProperties;
-
-    SampleDTO() {
-    }
-
-    public SampleDTO(Map<String, String> sampleProperties) {
-        this.sampleProperties = sampleProperties;
-    }
-
-    @Override
-    public Map<String, String> getSampleProperties() {
-        return sampleProperties;
-    }
-
+public enum HashType {
+    SHA1, MD5
 }

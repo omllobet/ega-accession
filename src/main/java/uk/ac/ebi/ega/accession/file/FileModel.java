@@ -22,4 +22,6 @@ public interface FileModel {
 
     String getHash();
 
+    HashType getHashType();
+
 }

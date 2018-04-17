@@ -25,10 +25,10 @@ public class ApiError {
     private final String message;
     private final String debugMessage;
 
-    public ApiError(HttpStatus status, String message, Throwable ex) {
+    public ApiError(HttpStatus status, String message, String debugMessage) {
         this.status = status;
         this.message = message;
-        this.debugMessage = ex.getLocalizedMessage();
+        this.debugMessage = debugMessage;
     }
 
     public HttpStatus getStatus() {

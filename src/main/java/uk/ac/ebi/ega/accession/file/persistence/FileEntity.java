@@ -18,27 +18,37 @@
 package uk.ac.ebi.ega.accession.file.persistence;
 
 import uk.ac.ebi.ega.accession.file.FileModel;
+import uk.ac.ebi.ega.accession.file.HashType;
+import uk.ac.ebi.ega.accession.file.rest.ValidHash;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
+@ValidHash
 @Entity
 public class FileEntity implements FileModel {
-
-    @Column(nullable = false, unique = true)
-    private String hashedMessage;
 
     @Id
     @Column(nullable = false, unique = true, length = 190)
     @Size(max = 190, min = 0)
     private String accession;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private HashType hashType;
+
+    @Column(nullable = false, unique = true)
+    private String hashedMessage;
+
     FileEntity() {
     }
 
-    public FileEntity(String hashedMessage, String accession) {
+    public FileEntity(HashType hashType, String accession, String hashedMessage) {
+        this.hashType = hashType;
         this.hashedMessage = hashedMessage;
         this.accession = accession;
     }
@@ -54,5 +64,10 @@ public class FileEntity implements FileModel {
     @Override
     public String getHash() {
         return hashedMessage;
+    }
+
+    @Override
+    public HashType getHashType() {
+        return hashType;
     }
 }
