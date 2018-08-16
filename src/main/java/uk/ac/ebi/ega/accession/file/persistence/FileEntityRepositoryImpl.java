@@ -15,31 +15,16 @@
  * limitations under the License.
  *
  */
-package uk.ac.ebi.ega.accession.file.rest;
+package uk.ac.ebi.ega.accession.file.persistence;
 
-import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.model.HashType;
+import org.springframework.transaction.PlatformTransactionManager;
+import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.repositories.BasicJpaAccessionedObjectCustomRepositoryImpl;
 
-@ValidHash
-public class FileDTO implements FileModel {
+import javax.persistence.EntityManager;
 
-    private HashType hashType;
+public class FileEntityRepositoryImpl extends BasicJpaAccessionedObjectCustomRepositoryImpl<Long, FileEntity> {
 
-    private String hash;
-
-    FileDTO() {
-    }
-
-    public FileDTO(HashType hashType, String hash) {
-        this.hashType = hashType;
-        this.hash = hash;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public HashType getHashType() {
-        return hashType;
+    public FileEntityRepositoryImpl(PlatformTransactionManager platformTransactionManager, EntityManager entityManager) {
+        super(FileEntity.class, platformTransactionManager, entityManager);
     }
 }

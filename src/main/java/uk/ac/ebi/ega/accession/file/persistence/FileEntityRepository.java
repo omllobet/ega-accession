@@ -15,31 +15,12 @@
  * limitations under the License.
  *
  */
-package uk.ac.ebi.ega.accession.file.rest;
+package uk.ac.ebi.ega.accession.file.persistence;
 
-import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.model.HashType;
+import org.springframework.stereotype.Repository;
+import uk.ac.ebi.ampt2d.commons.accession.persistence.repositories.IAccessionedObjectRepository;
 
-@ValidHash
-public class FileDTO implements FileModel {
+@Repository
+public interface FileEntityRepository extends IAccessionedObjectRepository<FileEntity, Long> {
 
-    private HashType hashType;
-
-    private String hash;
-
-    FileDTO() {
-    }
-
-    public FileDTO(HashType hashType, String hash) {
-        this.hashType = hashType;
-        this.hash = hash;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public HashType getHashType() {
-        return hashType;
-    }
 }

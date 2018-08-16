@@ -15,31 +15,15 @@
  * limitations under the License.
  *
  */
-package uk.ac.ebi.ega.accession.file.rest;
+package uk.ac.ebi.ega.accession.configuration;
 
-import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.model.HashType;
+import org.springframework.context.annotation.Configuration;
+import uk.ac.ebi.ampt2d.commons.accession.autoconfigure.EnableSpringDataContiguousIdService;
 
-@ValidHash
-public class FileDTO implements FileModel {
+@Configuration
+@EnableSpringDataContiguousIdService
+public class DatabaseConfiguration {
 
-    private HashType hashType;
 
-    private String hash;
 
-    FileDTO() {
-    }
-
-    public FileDTO(HashType hashType, String hash) {
-        this.hashType = hashType;
-        this.hash = hash;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public HashType getHashType() {
-        return hashType;
-    }
 }

@@ -17,8 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.file.persistence;
 
-import uk.ac.ebi.ampt2d.commons.accession.core.models.AccessionWrapper;
-import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.entities.AccessionedEntity;
+import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.entities.InactiveAccessionEntity;
 import uk.ac.ebi.ega.accession.file.model.FileModel;
 import uk.ac.ebi.ega.accession.file.model.HashType;
 
@@ -28,7 +27,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Entity
-public class FileEntity extends AccessionedEntity<FileModel, Long> implements FileModel {
+public class HistoricFileEntity extends InactiveAccessionEntity<FileModel, Long> implements FileModel {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
@@ -37,28 +36,14 @@ public class FileEntity extends AccessionedEntity<FileModel, Long> implements Fi
     @Column(nullable = false, unique = true)
     private String hash;
 
-    FileEntity() {
-        super(null, null, -1);
+    HistoricFileEntity() {
+        super();
     }
 
-    public FileEntity(HashType hashType, String hash, Long accession, String hashedMessage) {
-        super(hashedMessage, accession);
-        this.hashType = hashType;
-        this.hash = hash;
-    }
-
-    public FileEntity(HashType hashType, String hash, Long accession, String hashedMessage, int version) {
-        super(hashedMessage, accession, version);
-        this.hashType = hashType;
-        this.hash = hash;
-    }
-
-    public FileEntity(FileModel model, Long accession, String hashedMessage, int version) {
-        this(model.getHashType(), model.getHash(), accession, hashedMessage, version);
-    }
-
-    public FileEntity(AccessionWrapper<FileModel, String, Long> wrapper) {
-        this(wrapper.getData(), wrapper.getAccession(), wrapper.getHash(), wrapper.getVersion());
+    public HistoricFileEntity(FileEntity entity) {
+        super(entity);
+        this.hashType = entity.getHashType();
+        this.hash = entity.getHash();
     }
 
     @Override
@@ -75,4 +60,5 @@ public class FileEntity extends AccessionedEntity<FileModel, Long> implements Fi
     public HashType getHashType() {
         return hashType;
     }
+
 }

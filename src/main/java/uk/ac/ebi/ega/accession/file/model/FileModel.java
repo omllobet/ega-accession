@@ -15,31 +15,13 @@
  * limitations under the License.
  *
  */
-package uk.ac.ebi.ega.accession.file.rest;
 
-import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.model.HashType;
+package uk.ac.ebi.ega.accession.file.model;
 
-@ValidHash
-public class FileDTO implements FileModel {
+public interface FileModel {
 
-    private HashType hashType;
+    String getHash();
 
-    private String hash;
+    HashType getHashType();
 
-    FileDTO() {
-    }
-
-    public FileDTO(HashType hashType, String hash) {
-        this.hashType = hashType;
-        this.hash = hash;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public HashType getHashType() {
-        return hashType;
-    }
 }

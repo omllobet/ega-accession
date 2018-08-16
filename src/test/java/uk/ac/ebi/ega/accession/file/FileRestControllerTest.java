@@ -27,10 +27,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import uk.ac.ebi.ega.accession.file.persistence.FileAccessioningRepository;
+import uk.ac.ebi.ega.accession.file.model.HashType;
+import uk.ac.ebi.ega.accession.file.persistence.FileEntityRepository;
 import uk.ac.ebi.ega.accession.file.rest.FileDTO;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -43,7 +45,7 @@ public class FileRestControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Autowired
-    private FileAccessioningRepository fileAccessioningRepository;
+    private FileEntityRepository fileEntityRepository;
 
     @Test
     public void testRestApi() {
@@ -54,7 +56,7 @@ public class FileRestControllerTest {
         String url = "/v1/file";
         HttpEntity<Object> requestEntity = new HttpEntity<>(Arrays.asList(fileA, fileB, fileC));
 
-        ResponseEntity<Map> response = testRestTemplate.exchange(url, HttpMethod.POST, requestEntity, Map.class);
+        ResponseEntity<List> response = testRestTemplate.exchange(url, HttpMethod.POST, requestEntity, List.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(3, response.getBody().size());
@@ -69,17 +71,17 @@ public class FileRestControllerTest {
         String url = "/v1/file/";
         HttpEntity<Object> requestEntity = new HttpEntity<>(Arrays.asList(fileA, fileB, fileC));
 
-        ResponseEntity<Map> response = testRestTemplate.exchange(url, HttpMethod.POST, requestEntity, Map.class);
+        ResponseEntity<List> response = testRestTemplate.exchange(url, HttpMethod.POST, requestEntity, List.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(3, response.getBody().size());
-        assertEquals(3, fileAccessioningRepository.count());
+        assertEquals(3, fileEntityRepository.count());
 
         //Accessing Post Request again with same files
-        response = testRestTemplate.exchange(url, HttpMethod.POST, requestEntity, Map.class);
+        response = testRestTemplate.exchange(url, HttpMethod.POST, requestEntity, List.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(3, response.getBody().size());
-        assertEquals(3, fileAccessioningRepository.count());
+        assertEquals(3, fileEntityRepository.count());
     }
 }
