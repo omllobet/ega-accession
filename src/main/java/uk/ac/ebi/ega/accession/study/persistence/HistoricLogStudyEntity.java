@@ -15,12 +15,12 @@
  * limitations under the License.
  *
  */
-package uk.ac.ebi.ega.accession.file.persistence;
+package uk.ac.ebi.ega.accession.study.persistence;
 
-import org.springframework.stereotype.Repository;
-import uk.ac.ebi.ampt2d.commons.accession.persistence.repositories.IHistoryRepository;
+import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.entities.OperationEntity;
 
-@Repository
-public interface HistoricLogRepository extends IHistoryRepository<Long, HistoricLogFileEntity, Long> {
+import javax.persistence.Entity;
 
+@Entity
+public class HistoricLogStudyEntity extends OperationEntity<Long> {
 }

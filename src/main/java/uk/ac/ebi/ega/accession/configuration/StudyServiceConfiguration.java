@@ -29,57 +29,59 @@ import uk.ac.ebi.ampt2d.commons.accession.core.DatabaseService;
 import uk.ac.ebi.ampt2d.commons.accession.core.DecoratedAccessioningService;
 import uk.ac.ebi.ampt2d.commons.accession.generators.monotonic.MonotonicAccessionGenerator;
 import uk.ac.ebi.ampt2d.commons.accession.generators.monotonic.MonotonicRange;
+import uk.ac.ebi.ampt2d.commons.accession.hashing.SHA1HashingFunction;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.monotonic.service.ContiguousIdBlockService;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.monotonic.service.MonotonicDatabaseService;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.service.BasicJpaInactiveAccessionService;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.services.BasicSpringDataRepositoryDatabaseService;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.services.InactiveAccessionService;
-import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.persistence.FileEntity;
-import uk.ac.ebi.ega.accession.file.persistence.FileEntityRepository;
-import uk.ac.ebi.ega.accession.file.persistence.HistoricFileEntity;
-import uk.ac.ebi.ega.accession.file.persistence.HistoricFileRepository;
-import uk.ac.ebi.ega.accession.file.persistence.HistoricLogFileEntity;
-import uk.ac.ebi.ega.accession.file.persistence.HistoricLogFileRepository;
+import uk.ac.ebi.ega.accession.study.model.Study;
+import uk.ac.ebi.ega.accession.study.persistence.HistoricLogStudyEntity;
+import uk.ac.ebi.ega.accession.study.persistence.HistoricLogStudyRepository;
+import uk.ac.ebi.ega.accession.study.persistence.HistoricStudyEntity;
+import uk.ac.ebi.ega.accession.study.persistence.HistoricStudyRepository;
+import uk.ac.ebi.ega.accession.study.persistence.StudyEntity;
+import uk.ac.ebi.ega.accession.study.persistence.StudyEntityRepository;
 
 import java.util.Collection;
 
 @Configuration
-@EntityScan({"uk.ac.ebi.ega.accession.file.persistence"})
-@EnableJpaRepositories(basePackages = {"uk.ac.ebi.ega.accession.file.persistence"})
-public class FileServiceConfiguration {
+@EntityScan({"uk.ac.ebi.ega.accession.study.persistence"})
+@EnableJpaRepositories(basePackages = {"uk.ac.ebi.ega.accession.study.persistence"})
+public class StudyServiceConfiguration {
 
     private final String PAD_FORMAT = "%011d";
 
-    private final String PREFIX = "EGAF";
+    private final String PREFIX = "EGAS";
 
-    private final String CATEGORY_ID = "file";
+    private final String CATEGORY_ID = "study";
 
     @Autowired
     private ContiguousIdBlockService blockService;
 
     @Autowired
-    private FileEntityRepository repository;
+    private StudyEntityRepository repository;
 
     @Autowired
-    private HistoricFileRepository historicFileRepository;
+    private HistoricStudyRepository historicRepository;
 
     @Autowired
-    private HistoricLogFileRepository historicLogFileRepository;
+    private HistoricLogStudyRepository historicLogRepository;
 
     @Bean
-    public AccessioningService<FileModel, String, String> prefixFileAccessionService() {
-        return DecoratedAccessioningService.buildPrefixPaddedLongAccessionService(fileAccessionService(), PREFIX,
+    public AccessioningService<Study, String, String> prefixStudyAccessionService() {
+        return DecoratedAccessioningService.buildPrefixPaddedLongAccessionService(studyAccessionService(), PREFIX,
                 PAD_FORMAT, Long::parseLong);
     }
 
     @Bean
-    public AccessioningService<FileModel, String, Long> fileAccessionService() {
+    public AccessioningService<Study, String, Long> studyAccessionService() {
         return new BasicAccessioningService<>(
-                new MonotonicAccessionGenerator<>(CATEGORY_ID, "ega-accession-01", blockService, monotonicDatabaseService()),
-                fileAccessioningDatabaseService(),
-                fileModel -> fileModel.getHash(),
-                message -> message);
+                new MonotonicAccessionGenerator<>(CATEGORY_ID, "ega-accession-01", blockService,
+                        monotonicDatabaseService()),
+                studyAccessioningDatabaseService(),
+                study -> study.getSubmissionAccount() + "_" + study.getAlias(),
+                new SHA1HashingFunction());
     }
 
     public MonotonicDatabaseService monotonicDatabaseService() {
@@ -93,19 +95,19 @@ public class FileServiceConfiguration {
     }
 
     @Bean
-    public DatabaseService<FileModel, String, Long> fileAccessioningDatabaseService() {
+    public DatabaseService<Study, String, Long> studyAccessioningDatabaseService() {
         return new BasicSpringDataRepositoryDatabaseService<>(repository,
-                FileEntity::new,
-                historicFileAccessionService());
+                StudyEntity::new,
+                historicStudyAccessionService());
     }
 
     @Bean
-    public InactiveAccessionService<FileModel, Long, FileEntity> historicFileAccessionService() {
+    public InactiveAccessionService<Study, Long, StudyEntity> historicStudyAccessionService() {
         return new BasicJpaInactiveAccessionService<>(
-                historicLogFileRepository,
-                HistoricFileEntity::new,
-                historicFileRepository,
-                HistoricLogFileEntity::new);
+                historicLogRepository,
+                HistoricStudyEntity::new,
+                historicRepository,
+                HistoricLogStudyEntity::new);
     }
 
 }
