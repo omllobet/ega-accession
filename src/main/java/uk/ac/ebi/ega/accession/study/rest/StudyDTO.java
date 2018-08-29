@@ -17,26 +17,38 @@
  */
 package uk.ac.ebi.ega.accession.study.rest;
 
-import uk.ac.ebi.ega.accession.study.StudyModel;
+import uk.ac.ebi.ega.accession.study.model.Study;
 
-import javax.validation.constraints.NotNull;
-import java.util.Map;
+import javax.persistence.Column;
 
-public class StudyDTO implements StudyModel {
+public class StudyDTO implements Study {
 
-    @NotNull(message = "Study properties should not be null")
-    private Map<String, String> studyProperties;
+    @Column(nullable = false)
+    private String submissionAccount;
 
-    StudyDTO() {
+    @Column(nullable = false)
+    private String alias;
+
+    StudyDTO(){
     }
 
-    public StudyDTO(Map<String, String> studyProperties) {
-        this.studyProperties = studyProperties;
+    public StudyDTO(Study study) {
+        this(study.getSubmissionAccount(), study.getAlias());
+    }
+
+    public StudyDTO(String submissionAccount, String alias) {
+        this.submissionAccount = submissionAccount;
+        this.alias = alias;
     }
 
     @Override
-    public Map<String, String> getStudyProperties() {
-        return studyProperties;
+    public String getSubmissionAccount() {
+        return submissionAccount;
+    }
+
+    @Override
+    public String getAlias() {
+        return alias;
     }
 
 }

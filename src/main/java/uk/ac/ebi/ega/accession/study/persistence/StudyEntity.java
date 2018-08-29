@@ -17,48 +17,48 @@
  */
 package uk.ac.ebi.ega.accession.study.persistence;
 
-import uk.ac.ebi.ega.accession.study.StudyModel;
+import uk.ac.ebi.ampt2d.commons.accession.core.models.AccessionWrapper;
+import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.entities.AccessionedEntity;
+import uk.ac.ebi.ega.accession.study.model.Study;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
-import java.util.Map;
 
 @Entity
-public class StudyEntity implements StudyModel {
+public class StudyEntity extends AccessionedEntity<Study, Long> implements Study {
 
-    @Id
-    @Column(nullable = false, unique = true, updatable = false, length = 190)
-    @Size(max = 190, min = 0)
-    private String accession;
+    @Column(nullable = false)
+    private String submissionAccount;
 
-    @ElementCollection
-    private Map<String, String> studyProperties;
-
-    @Column(nullable = false, unique = true)
-    private String hashedMessage;
+    @Column(nullable = false)
+    private String alias;
 
     StudyEntity() {
+        super(null, null, -1);
     }
 
-    public StudyEntity(Map<String, String> studyProperties, String accession, String hashedMessage) {
-        this.studyProperties = studyProperties;
-        this.accession = accession;
-        this.hashedMessage = hashedMessage;
+    public StudyEntity(Study study, Long accession, String hashedMessage, int version) {
+        super(hashedMessage, accession, version);
+        this.submissionAccount = study.getSubmissionAccount();
+        this.alias = study.getAlias();
     }
 
-    public String getAccession() {
-        return this.accession;
+    public StudyEntity(AccessionWrapper<Study, String, Long> wrapper) {
+        this(wrapper.getData(), wrapper.getAccession(), wrapper.getHash(), wrapper.getVersion());
     }
 
-    public String getHashedMessage() {
-        return hashedMessage;
+    @Override
+    public Study getModel() {
+        return this;
     }
 
-    public Map<String, String> getStudyProperties() {
-        return studyProperties;
+    @Override
+    public String getSubmissionAccount() {
+        return submissionAccount;
     }
 
+    @Override
+    public String getAlias() {
+        return alias;
+    }
 }

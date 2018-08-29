@@ -17,53 +17,58 @@
  */
 package uk.ac.ebi.ega.accession.file.persistence;
 
-import uk.ac.ebi.ega.accession.file.FileModel;
-import uk.ac.ebi.ega.accession.file.HashType;
-import uk.ac.ebi.ega.accession.file.rest.ValidHash;
+import uk.ac.ebi.ampt2d.commons.accession.core.models.AccessionWrapper;
+import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.entities.AccessionedEntity;
+import uk.ac.ebi.ega.accession.file.model.FileModel;
+import uk.ac.ebi.ega.accession.file.model.HashType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
 
-@ValidHash
 @Entity
-public class FileEntity implements FileModel {
-
-    @Id
-    @Column(nullable = false, unique = true, length = 190)
-    @Size(max = 190, min = 0)
-    private String accession;
+public class FileEntity extends AccessionedEntity<FileModel, Long> implements FileModel {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private HashType hashType;
 
     @Column(nullable = false, unique = true)
-    private String hashedMessage;
+    private String hash;
 
     FileEntity() {
+        super(null, null, -1);
     }
 
-    public FileEntity(HashType hashType, String accession, String hashedMessage) {
+    public FileEntity(HashType hashType, String hash, Long accession, String hashedMessage) {
+        super(hashedMessage, accession);
         this.hashType = hashType;
-        this.hashedMessage = hashedMessage;
-        this.accession = accession;
+        this.hash = hash;
     }
 
-    public String getHashedMessage() {
-        return hashedMessage;
+    public FileEntity(HashType hashType, String hash, Long accession, String hashedMessage, int version) {
+        super(hashedMessage, accession, version);
+        this.hashType = hashType;
+        this.hash = hash;
     }
 
-    public String getAccession() {
-        return accession;
+    public FileEntity(FileModel model, Long accession, String hashedMessage, int version) {
+        this(model.getHashType(), model.getHash(), accession, hashedMessage, version);
+    }
+
+    public FileEntity(AccessionWrapper<FileModel, String, Long> wrapper) {
+        this(wrapper.getData(), wrapper.getAccession(), wrapper.getHash(), wrapper.getVersion());
+    }
+
+    @Override
+    public FileModel getModel() {
+        return this;
     }
 
     @Override
     public String getHash() {
-        return hashedMessage;
+        return hash;
     }
 
     @Override

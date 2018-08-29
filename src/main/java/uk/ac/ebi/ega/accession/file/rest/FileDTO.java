@@ -17,8 +17,8 @@
  */
 package uk.ac.ebi.ega.accession.file.rest;
 
-import uk.ac.ebi.ega.accession.file.FileModel;
-import uk.ac.ebi.ega.accession.file.HashType;
+import uk.ac.ebi.ega.accession.file.model.FileModel;
+import uk.ac.ebi.ega.accession.file.model.HashType;
 
 @ValidHash
 public class FileDTO implements FileModel {
