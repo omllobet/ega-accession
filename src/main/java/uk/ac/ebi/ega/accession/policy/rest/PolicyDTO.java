@@ -29,6 +29,9 @@ public class PolicyDTO implements Policy {
     @Column(nullable = false)
     private String alias;
 
+    PolicyDTO(){
+    }
+
     public PolicyDTO(Policy policy) {
         this(policy.getSubmissionAccount(), policy.getAlias());
     }

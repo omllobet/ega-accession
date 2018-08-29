@@ -29,6 +29,9 @@ public class ExperimentDTO implements Experiment {
     @Column(nullable = false)
     private String alias;
 
+    ExperimentDTO(){
+    }
+
     public ExperimentDTO(Experiment experiment) {
         this(experiment.getSubmissionAccount(), experiment.getAlias());
     }

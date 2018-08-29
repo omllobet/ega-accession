@@ -29,6 +29,9 @@ public class DatasetDTO implements Dataset {
     @Column(nullable = false)
     private String alias;
 
+    DatasetDTO(){
+    }
+
     public DatasetDTO(Dataset dataset) {
         this(dataset.getSubmissionAccount(), dataset.getAlias());
     }

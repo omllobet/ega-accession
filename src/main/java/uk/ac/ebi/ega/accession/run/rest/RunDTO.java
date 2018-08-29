@@ -29,6 +29,9 @@ public class RunDTO implements Run {
     @Column(nullable = false)
     private String alias;
 
+    RunDTO(){
+    }
+
     public RunDTO(Run run) {
         this(run.getSubmissionAccount(), run.getAlias());
     }

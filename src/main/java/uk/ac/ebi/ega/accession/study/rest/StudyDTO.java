@@ -29,6 +29,9 @@ public class StudyDTO implements Study {
     @Column(nullable = false)
     private String alias;
 
+    StudyDTO(){
+    }
+
     public StudyDTO(Study study) {
         this(study.getSubmissionAccount(), study.getAlias());
     }

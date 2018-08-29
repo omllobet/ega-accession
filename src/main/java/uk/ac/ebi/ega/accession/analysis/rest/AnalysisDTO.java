@@ -29,6 +29,9 @@ public class AnalysisDTO implements Analysis {
     @Column(nullable = false)
     private String alias;
 
+    AnalysisDTO(){
+    }
+
     public AnalysisDTO(Analysis analysis) {
         this(analysis.getSubmissionAccount(), analysis.getAlias());
     }

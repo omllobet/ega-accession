@@ -29,6 +29,9 @@ public class SampleControlledDTO implements SampleControlled {
     @Column(nullable = false)
     private String alias;
 
+    SampleControlledDTO(){
+    }
+
     public SampleControlledDTO(SampleControlled sampleControlled) {
         this(sampleControlled.getSubmissionAccount(), sampleControlled.getAlias());
     }

@@ -29,6 +29,9 @@ public class DacDTO implements Dac {
     @Column(nullable = false)
     private String alias;
 
+    DacDTO(){
+    }
+
     public DacDTO(Dac dac) {
         this(dac.getSubmissionAccount(), dac.getAlias());
     }

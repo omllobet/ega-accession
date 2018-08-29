@@ -29,6 +29,9 @@ public class ArrayDTO implements Array {
     @Column(nullable = false)
     private String alias;
 
+    ArrayDTO(){
+    }
+
     public ArrayDTO(Array array) {
         this(array.getSubmissionAccount(), array.getAlias());
     }

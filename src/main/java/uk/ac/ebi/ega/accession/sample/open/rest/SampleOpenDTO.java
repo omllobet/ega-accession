@@ -26,6 +26,9 @@ public class SampleOpenDTO implements SampleOpen {
     @Column(nullable = false)
     private String biosampleAccession;
 
+    SampleOpenDTO(){
+    }
+
     public SampleOpenDTO(SampleOpen sampleOpen) {
         this(sampleOpen.getBiosampleAccession());
     }
