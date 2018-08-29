@@ -18,9 +18,11 @@
 package uk.ac.ebi.ega.accession.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import uk.ac.ebi.ampt2d.commons.accession.autoconfigure.EnableSpringDataContiguousIdService;
 
 @Configuration
+@EnableJpaAuditing
 @EnableSpringDataContiguousIdService
 public class DatabaseConfiguration {
 
