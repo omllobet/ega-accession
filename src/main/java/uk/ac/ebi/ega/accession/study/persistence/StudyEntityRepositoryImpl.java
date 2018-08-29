@@ -19,7 +19,6 @@ package uk.ac.ebi.ega.accession.study.persistence;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.repositories.BasicJpaAccessionedObjectCustomRepositoryImpl;
-import uk.ac.ebi.ega.accession.study.persistence.StudyEntity;
 
 import javax.persistence.EntityManager;
 

@@ -19,7 +19,6 @@ package uk.ac.ebi.ega.accession.study.persistence;
 
 import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.entities.InactiveAccessionEntity;
 import uk.ac.ebi.ega.accession.study.model.Study;
-import uk.ac.ebi.ega.accession.study.persistence.StudyEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -36,12 +36,12 @@ import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.service.BasicJpaInacti
 import uk.ac.ebi.ampt2d.commons.accession.persistence.services.BasicSpringDataRepositoryDatabaseService;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.services.InactiveAccessionService;
 import uk.ac.ebi.ega.accession.dac.model.Dac;
-import uk.ac.ebi.ega.accession.dac.persistence.HistoricLogDacEntity;
-import uk.ac.ebi.ega.accession.dac.persistence.HistoricLogDacRepository;
-import uk.ac.ebi.ega.accession.dac.persistence.HistoricDacEntity;
-import uk.ac.ebi.ega.accession.dac.persistence.HistoricDacRepository;
 import uk.ac.ebi.ega.accession.dac.persistence.DacEntity;
 import uk.ac.ebi.ega.accession.dac.persistence.DacEntityRepository;
+import uk.ac.ebi.ega.accession.dac.persistence.HistoricDacEntity;
+import uk.ac.ebi.ega.accession.dac.persistence.HistoricDacRepository;
+import uk.ac.ebi.ega.accession.dac.persistence.HistoricLogDacEntity;
+import uk.ac.ebi.ega.accession.dac.persistence.HistoricLogDacRepository;
 
 import java.util.Collection;
 

@@ -19,8 +19,6 @@ package uk.ac.ebi.ega.accession.study.persistence;
 
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.repositories.IAccessionedObjectRepository;
-import uk.ac.ebi.ega.accession.file.persistence.FileEntity;
-import uk.ac.ebi.ega.accession.study.persistence.StudyEntity;
 
 @Repository
 public interface StudyEntityRepository extends IAccessionedObjectRepository<StudyEntity, Long> {
