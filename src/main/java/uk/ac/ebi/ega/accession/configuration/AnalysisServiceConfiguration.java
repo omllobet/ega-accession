@@ -19,6 +19,7 @@
 package uk.ac.ebi.ega.accession.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,6 +57,9 @@ public class AnalysisServiceConfiguration {
 
     private final String CATEGORY_ID = "analysis";
 
+    @Value("${accessioning.instanceId}")
+    private String applicationInstanceId;
+
     @Autowired
     private ContiguousIdBlockService blockService;
 
@@ -77,7 +81,7 @@ public class AnalysisServiceConfiguration {
     @Bean
     public AccessioningService<Analysis, String, Long> analysisAccessionService() {
         return new BasicAccessioningService<>(
-                new MonotonicAccessionGenerator<>(CATEGORY_ID, "ega-accession-01", blockService,
+                new MonotonicAccessionGenerator<>(CATEGORY_ID, applicationInstanceId, blockService,
                         monotonicDatabaseService()),
                 analysisAccessioningDatabaseService(),
                 analysis -> analysis.getSubmissionAccount() + "_" + analysis.getAlias(),

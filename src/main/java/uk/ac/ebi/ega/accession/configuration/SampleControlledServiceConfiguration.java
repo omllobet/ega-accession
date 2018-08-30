@@ -19,6 +19,7 @@
 package uk.ac.ebi.ega.accession.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,6 +66,9 @@ public class SampleControlledServiceConfiguration {
 
     private final String CATEGORY_ID = "sample";
 
+    @Value("${accessioning.instanceId}")
+    private String applicationInstanceId;
+
     @Autowired
     private ContiguousIdBlockService blockService;
 
@@ -95,7 +99,8 @@ public class SampleControlledServiceConfiguration {
     @Bean
     public AccessioningService<SampleControlled, String, Long> sampleControlledAccessionService() {
         return new BasicAccessioningService<>(
-                new MonotonicAccessionGenerator<>(CATEGORY_ID, "ega-accession-01-sample-open", blockService,
+                new MonotonicAccessionGenerator<>(CATEGORY_ID, applicationInstanceId + "-controlled-sample",
+                        blockService,
                         monotonicDatabaseService()),
                 sampleControlledAccessioningDatabaseService(),
                 sampleControlled -> sampleControlled.getSubmissionAccount() + "_" + sampleControlled.getAlias(),
@@ -137,7 +142,7 @@ public class SampleControlledServiceConfiguration {
     @Bean
     public AccessioningService<SampleOpen, String, Long> sampleOpenAccessionService() {
         return new BasicAccessioningService<>(
-                new MonotonicAccessionGenerator<>(CATEGORY_ID, "ega-accession-01-sample-open", blockService,
+                new MonotonicAccessionGenerator<>(CATEGORY_ID, applicationInstanceId + "-open-sample", blockService,
                         monotonicDatabaseService()),
                 sampleOpenAccessioningDatabaseService(),
                 sampleOpen -> sampleOpen.getBiosampleAccession(),

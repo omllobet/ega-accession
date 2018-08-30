@@ -24,6 +24,4 @@ import uk.ac.ebi.ampt2d.commons.accession.autoconfigure.EnableBasicRestControlle
 @EnableBasicRestControllerAdvice
 public class RestConfiguration {
 
-
-
 }

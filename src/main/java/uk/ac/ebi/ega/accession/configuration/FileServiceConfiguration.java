@@ -19,6 +19,7 @@
 package uk.ac.ebi.ega.accession.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,6 +56,9 @@ public class FileServiceConfiguration {
 
     private final String CATEGORY_ID = "file";
 
+    @Value("${accessioning.instanceId}")
+    private String applicationInstanceId;
+
     @Autowired
     private ContiguousIdBlockService blockService;
 
@@ -76,7 +80,7 @@ public class FileServiceConfiguration {
     @Bean
     public AccessioningService<FileModel, String, Long> fileAccessionService() {
         return new BasicAccessioningService<>(
-                new MonotonicAccessionGenerator<>(CATEGORY_ID, "ega-accession-01", blockService, monotonicDatabaseService()),
+                new MonotonicAccessionGenerator<>(CATEGORY_ID, applicationInstanceId, blockService, monotonicDatabaseService()),
                 fileAccessioningDatabaseService(),
                 fileModel -> fileModel.getHash(),
                 message -> message);
