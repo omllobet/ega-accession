@@ -33,7 +33,7 @@ public class HistoricFileEntity extends InactiveAccessionEntity<FileModel, Long>
     @Column(nullable = false)
     private HashType hashType;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String hash;
 
     HistoricFileEntity() {
