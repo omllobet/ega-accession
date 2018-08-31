@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.sample.controlled.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.sample.controlled.model.SampleControlled;
 
 @RestController
 @RequestMapping(value = "/v1/sample/controlled")
+@Api(tags = "Sample controlled")
 public class SampleControlledRestController extends BasicRestController<SampleControlledDTO, SampleControlled, String, String> {
 
     public SampleControlledRestController(

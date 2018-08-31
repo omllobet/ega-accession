@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.file.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.file.model.FileModel;
 
 @RestController
 @RequestMapping(value = "/v1/file")
+@Api(tags = "File")
 public class FileRestController extends BasicRestController<FileDTO, FileModel, String, String> {
 
     public FileRestController(AccessioningService<FileModel, String, String> fileAccessionService) {

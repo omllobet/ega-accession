@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.array.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.array.model.Array;
 
 @RestController
 @RequestMapping(value = "/v1/array")
+@Api(tags = "Array")
 public class ArrayRestController extends BasicRestController<ArrayDTO, Array, String, String> {
 
     public ArrayRestController(AccessioningService<Array, String, String> arrayAccessionService) {

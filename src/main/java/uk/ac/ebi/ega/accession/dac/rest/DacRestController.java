@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.dac.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.dac.model.Dac;
 
 @RestController
 @RequestMapping(value = "/v1/dac")
+@Api(tags = "Dac")
 public class DacRestController extends BasicRestController<DacDTO, Dac, String, String> {
 
     public DacRestController(AccessioningService<Dac, String, String> dacAccessionService) {

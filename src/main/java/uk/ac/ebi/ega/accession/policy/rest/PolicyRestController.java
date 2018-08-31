@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.policy.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.policy.model.Policy;
 
 @RestController
 @RequestMapping(value = "/v1/policy")
+@Api(tags = "Policy")
 public class PolicyRestController extends BasicRestController<PolicyDTO, Policy, String, String> {
 
     public PolicyRestController(AccessioningService<Policy, String, String> policyAccessionService) {

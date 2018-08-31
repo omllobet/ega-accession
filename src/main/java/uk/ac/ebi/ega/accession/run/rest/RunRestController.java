@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.run.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.run.model.Run;
 
 @RestController
 @RequestMapping(value = "/v1/run")
+@Api(tags = "Run")
 public class RunRestController extends BasicRestController<RunDTO, Run, String, String> {
 
     public RunRestController(AccessioningService<Run, String, String> runAccessionService) {

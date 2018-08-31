@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.sample.open.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.sample.open.model.SampleOpen;
 
 @RestController
 @RequestMapping(value = "/v1/sample/open")
+@Api(tags = "Sample open access")
 public class SampleOpenRestController extends BasicRestController<SampleOpenDTO, SampleOpen, String, String> {
 
     public SampleOpenRestController(

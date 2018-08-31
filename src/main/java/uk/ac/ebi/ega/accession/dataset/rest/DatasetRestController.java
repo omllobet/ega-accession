@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.dataset.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.dataset.model.Dataset;
 
 @RestController
 @RequestMapping(value = "/v1/dataset")
+@Api(tags = "Dataset")
 public class DatasetRestController extends BasicRestController<DatasetDTO, Dataset, String, String> {
 
     public DatasetRestController(AccessioningService<Dataset, String, String> runAccessionService) {

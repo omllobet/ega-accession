@@ -17,6 +17,7 @@
  */
 package uk.ac.ebi.ega.accession.experiment.rest;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
@@ -25,6 +26,7 @@ import uk.ac.ebi.ega.accession.experiment.model.Experiment;
 
 @RestController
 @RequestMapping(value = "/v1/experiment")
+@Api(tags = "Experiment")
 public class ExperimentRestController extends BasicRestController<ExperimentDTO, Experiment, String, String> {
 
     public ExperimentRestController(AccessioningService<Experiment, String, String> runAccessionService) {
