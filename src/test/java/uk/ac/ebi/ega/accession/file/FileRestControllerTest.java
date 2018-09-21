@@ -27,13 +27,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import uk.ac.ebi.ega.accession.file.model.HashType;
 import uk.ac.ebi.ega.accession.file.persistence.FileEntityRepository;
 import uk.ac.ebi.ega.accession.file.rest.FileDTO;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,9 +47,9 @@ public class FileRestControllerTest {
 
     @Test
     public void testRestApi() {
-        FileDTO fileA = new FileDTO(HashType.MD5, "checksumAAAAAAAAAAAAAAAAAAAAAAAA");
-        FileDTO fileB = new FileDTO(HashType.MD5, "checksumBBBBBBBBBBBBBBBBBBBBBBBB");
-        FileDTO fileC = new FileDTO(HashType.SHA1, "checksumCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+        FileDTO fileA = new FileDTO("checksumaaaaaaaaaaaaaaaaaaaaaaaa", null);
+        FileDTO fileB = new FileDTO("checksumbbbbbbbbbbbbbbbbbbbbbbbb", null);
+        FileDTO fileC = new FileDTO("checksumcccccccccccccccccccccccc", "chesumsha2cccccccccccccccccccccccccccccccccccccccccccccccccccccc");
 
         String url = "/v1/file";
         HttpEntity<Object> requestEntity = new HttpEntity<>(Arrays.asList(fileA, fileB, fileC));
@@ -64,9 +62,9 @@ public class FileRestControllerTest {
 
     @Test
     public void requestPostTwiceAndWeGetSameAccessions() {
-        FileDTO fileA = new FileDTO(HashType.MD5, "checksumAAAAAAAAAAAAAAAAAAAAAAAA");
-        FileDTO fileB = new FileDTO(HashType.MD5, "checksumBBBBBBBBBBBBBBBBBBBBBBBB");
-        FileDTO fileC = new FileDTO(HashType.SHA1, "checksumCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+        FileDTO fileA = new FileDTO("checksumaaaaaaaaaaaaaaaaaaaaaaaa", null);
+        FileDTO fileB = new FileDTO("checksumbbbbbbbbbbbbbbbbbbbbbbbb", null);
+        FileDTO fileC = new FileDTO("checksumcccccccccccccccccccccccc", "chesumsha2cccccccccccccccccccccccccccccccccccccccccccccccccccccc");
 
         String url = "/v1/file/";
         HttpEntity<Object> requestEntity = new HttpEntity<>(Arrays.asList(fileA, fileB, fileC));

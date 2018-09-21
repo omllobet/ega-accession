@@ -17,8 +17,8 @@
  */
 package uk.ac.ebi.ega.accession.file.rest;
 
+import java.util.Objects;
 import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.model.HashType;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -34,18 +34,23 @@ public class HashValidator implements ConstraintValidator<ValidHash, FileModel> 
 
         constraintValidatorContext.disableDefaultConstraintViolation();
 
-        if (fileModel.getHashType() == null) {
-            constraintValidatorContext.buildConstraintViolationWithTemplate(
-                    "Please provide a hashType.Supported types :MD5,SHA1").addConstraintViolation();
-            return false;
-        }
-
-        if (fileModel.getHash() == null || (fileModel.getHashType() == HashType.MD5 && fileModel.getHash().length() != 32) ||
-                (fileModel.getHashType() == HashType.SHA1 && fileModel.getHash().length() != 40)) {
-            constraintValidatorContext.buildConstraintViolationWithTemplate("Please provide a valid hash")
+        if (fileModel.getFileMd5() == null || fileModel.getFileMd5().length() != 32 || !isLowerCase(fileModel.getFileMd5())) {
+            constraintValidatorContext.buildConstraintViolationWithTemplate("Please provide a valid lowercase hash for md5")
                     .addConstraintViolation();
             return false;
         }
+
+        if (fileModel.getFileSha2() != null && (fileModel.getFileSha2().length() != 0 && fileModel.getFileSha2().length() != 64 ) ||
+            fileModel.getFileSha2() != null && !isLowerCase(fileModel.getFileSha2())) {
+            constraintValidatorContext.buildConstraintViolationWithTemplate("Please provide a valid lowercase hash for sha256")
+                .addConstraintViolation();
+            return false;
+        }
+
         return true;
+    }
+
+    private boolean isLowerCase(String stringToCheck) {
+        return Objects.equals(stringToCheck, stringToCheck.toLowerCase());
     }
 }

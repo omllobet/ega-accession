@@ -20,8 +20,8 @@ package uk.ac.ebi.ega.accession.file.model;
 
 public interface FileModel {
 
-    String getHash();
+    String getFileMd5();
 
-    HashType getHashType();
+    String getFileSha2();
 
 }

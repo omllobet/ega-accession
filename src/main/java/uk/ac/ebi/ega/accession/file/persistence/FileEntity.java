@@ -20,41 +20,42 @@ package uk.ac.ebi.ega.accession.file.persistence;
 import uk.ac.ebi.ampt2d.commons.accession.core.models.AccessionWrapper;
 import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.entities.AccessionedEntity;
 import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.model.HashType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 public class FileEntity extends AccessionedEntity<FileModel, Long> implements FileModel {
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
-    private HashType hashType;
-
     @Column(nullable = false, unique = true)
-    private String hash;
+    private String fileMd5;
+
+    @Column()
+    private String fileSha2;
 
     FileEntity() {
         super(null, null, -1);
     }
 
-    public FileEntity(HashType hashType, String hash, Long accession, String hashedMessage) {
+    public FileEntity(String fileMd5, Long accession, String hashedMessage) {
         super(hashedMessage, accession);
-        this.hashType = hashType;
-        this.hash = hash;
+        this.fileMd5 = fileMd5;
     }
 
-    public FileEntity(HashType hashType, String hash, Long accession, String hashedMessage, int version) {
+    public FileEntity(String fileMd5, String fileSha2, Long accession, String hashedMessage) {
+        super(hashedMessage, accession);
+        this.fileMd5 = fileMd5;
+        this.fileSha2 = fileSha2;
+    }
+
+    public FileEntity(String fileMd5, String fileSha2, Long accession, String hashedMessage, int version) {
         super(hashedMessage, accession, version);
-        this.hashType = hashType;
-        this.hash = hash;
+        this.fileMd5 = fileMd5;
+        this.fileSha2 = fileSha2;
     }
 
     public FileEntity(FileModel model, Long accession, String hashedMessage, int version) {
-        this(model.getHashType(), model.getHash(), accession, hashedMessage, version);
+        this(model.getFileMd5(), model.getFileSha2(), accession, hashedMessage, version);
     }
 
     public FileEntity(AccessionWrapper<FileModel, String, Long> wrapper) {
@@ -67,12 +68,12 @@ public class FileEntity extends AccessionedEntity<FileModel, Long> implements Fi
     }
 
     @Override
-    public String getHash() {
-        return hash;
+    public String getFileMd5() {
+        return fileMd5;
     }
 
     @Override
-    public HashType getHashType() {
-        return hashType;
+    public String getFileSha2() {
+        return fileSha2;
     }
 }

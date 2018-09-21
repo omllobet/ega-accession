@@ -30,7 +30,7 @@ import uk.ac.ebi.ega.accession.file.model.FileModel;
 public class FileRestController extends BasicRestController<FileDTO, FileModel, String, String> {
 
     public FileRestController(AccessioningService<FileModel, String, String> fileAccessionService) {
-        super(fileAccessionService, fileModel -> new FileDTO(fileModel.getHashType(), fileModel.getHash()));
+        super(fileAccessionService, fileModel -> new FileDTO(fileModel.getFileMd5(), fileModel.getFileSha2()));
     }
 
 }
