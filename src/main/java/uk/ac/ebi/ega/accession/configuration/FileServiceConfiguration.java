@@ -82,7 +82,7 @@ public class FileServiceConfiguration {
         return new BasicAccessioningService<>(
                 new MonotonicAccessionGenerator<>(CATEGORY_ID, applicationInstanceId, blockService, monotonicDatabaseService()),
                 fileAccessioningDatabaseService(),
-                fileModel -> fileModel.getHash(),
+                fileModel -> fileModel.getFileMd5(),
                 message -> message);
     }
 

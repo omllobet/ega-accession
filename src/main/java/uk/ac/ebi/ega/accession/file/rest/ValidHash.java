@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ValidHash {
 
-    String message() default "Please provide a valid hashType and hash";
+    String message() default "Please provide a valid hash";
 
     Class<?>[] groups() default {};
 

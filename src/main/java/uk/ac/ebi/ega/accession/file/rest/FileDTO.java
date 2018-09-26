@@ -18,28 +18,29 @@
 package uk.ac.ebi.ega.accession.file.rest;
 
 import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.model.HashType;
 
 @ValidHash
 public class FileDTO implements FileModel {
 
-    private HashType hashType;
+    private String fileMd5;
 
-    private String hash;
+    private String fileSha2;
 
     FileDTO() {
     }
 
-    public FileDTO(HashType hashType, String hash) {
-        this.hashType = hashType;
-        this.hash = hash;
+    public FileDTO(String fileMd5, String fileSha2) {
+        this.fileMd5 = fileMd5;
+        this.fileSha2 = fileSha2;
     }
 
-    public String getHash() {
-        return hash;
+    @Override
+    public String getFileMd5() {
+        return fileMd5;
     }
 
-    public HashType getHashType() {
-        return hashType;
+    @Override
+    public String getFileSha2() {
+        return fileSha2;
     }
 }

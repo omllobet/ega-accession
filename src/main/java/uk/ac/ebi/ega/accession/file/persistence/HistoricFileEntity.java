@@ -19,22 +19,18 @@ package uk.ac.ebi.ega.accession.file.persistence;
 
 import uk.ac.ebi.ampt2d.commons.accession.persistence.jpa.entities.InactiveAccessionEntity;
 import uk.ac.ebi.ega.accession.file.model.FileModel;
-import uk.ac.ebi.ega.accession.file.model.HashType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 public class HistoricFileEntity extends InactiveAccessionEntity<FileModel, Long> implements FileModel {
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
-    private HashType hashType;
+    @Column(nullable = false, unique = true)
+    private String fileMd5;
 
-    @Column(nullable = false)
-    private String hash;
+    @Column()
+    private String fileSha2;
 
     HistoricFileEntity() {
         super();
@@ -42,8 +38,8 @@ public class HistoricFileEntity extends InactiveAccessionEntity<FileModel, Long>
 
     public HistoricFileEntity(FileEntity entity) {
         super(entity);
-        this.hashType = entity.getHashType();
-        this.hash = entity.getHash();
+        this.fileMd5 = entity.getFileMd5();
+        this.fileSha2 = entity.getFileSha2();
     }
 
     @Override
@@ -52,13 +48,12 @@ public class HistoricFileEntity extends InactiveAccessionEntity<FileModel, Long>
     }
 
     @Override
-    public String getHash() {
-        return hash;
+    public String getFileMd5() {
+        return fileMd5;
     }
 
     @Override
-    public HashType getHashType() {
-        return hashType;
+    public String getFileSha2() {
+        return fileSha2;
     }
-
 }
