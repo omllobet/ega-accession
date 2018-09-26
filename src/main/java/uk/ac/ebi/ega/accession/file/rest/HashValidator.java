@@ -17,11 +17,11 @@
  */
 package uk.ac.ebi.ega.accession.file.rest;
 
-import java.util.Objects;
 import uk.ac.ebi.ega.accession.file.model.FileModel;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 public class HashValidator implements ConstraintValidator<ValidHash, FileModel> {
 
@@ -34,23 +34,33 @@ public class HashValidator implements ConstraintValidator<ValidHash, FileModel> 
 
         constraintValidatorContext.disableDefaultConstraintViolation();
 
-        if (fileModel.getFileMd5() == null || fileModel.getFileMd5().length() != 32 || !isLowerCase(fileModel.getFileMd5())) {
-            constraintValidatorContext.buildConstraintViolationWithTemplate("Please provide a valid lowercase hash for md5")
+        if (fileModel.getFileMd5() == null || !isValidMd5(fileModel.getFileMd5())) {
+            constraintValidatorContext
+                    .buildConstraintViolationWithTemplate("Please provide a valid lowercase hash for md5")
                     .addConstraintViolation();
             return false;
         }
 
-        if (fileModel.getFileSha2() != null && (fileModel.getFileSha2().length() != 0 && fileModel.getFileSha2().length() != 64 ) ||
-            fileModel.getFileSha2() != null && !isLowerCase(fileModel.getFileSha2())) {
-            constraintValidatorContext.buildConstraintViolationWithTemplate("Please provide a valid lowercase hash for sha256")
-                .addConstraintViolation();
+        if (fileModel.getFileSha2() != null && !isValidSha2(fileModel.getFileSha2())) {
+            constraintValidatorContext.
+                    buildConstraintViolationWithTemplate("Please provide a valid lowercase hash for sha256")
+                    .addConstraintViolation();
             return false;
         }
 
         return true;
     }
 
+    private boolean isValidMd5(String string) {
+        return string.length() == 32 && isLowerCase(string);
+    }
+
     private boolean isLowerCase(String stringToCheck) {
         return Objects.equals(stringToCheck, stringToCheck.toLowerCase());
     }
+
+    private boolean isValidSha2(String string) {
+        return string.length() == 64 && isLowerCase(string);
+    }
+    
 }

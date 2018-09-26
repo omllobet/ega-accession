@@ -49,7 +49,8 @@ public class FileRestControllerTest {
     public void testRestApi() {
         FileDTO fileA = new FileDTO("checksumaaaaaaaaaaaaaaaaaaaaaaaa", null);
         FileDTO fileB = new FileDTO("checksumbbbbbbbbbbbbbbbbbbbbbbbb", null);
-        FileDTO fileC = new FileDTO("checksumcccccccccccccccccccccccc", "chesumsha2cccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+        FileDTO fileC = new FileDTO("checksumcccccccccccccccccccccccc",
+                "chesumsha2cccccccccccccccccccccccccccccccccccccccccccccccccccccc");
 
         String url = "/v1/file";
         HttpEntity<Object> requestEntity = new HttpEntity<>(Arrays.asList(fileA, fileB, fileC));
