@@ -24,7 +24,7 @@ pipeline {
   stages {
     stage('Default Build pointing to Staging DB') {
       steps {
-        sh "mvn clean package -DskipTests -DbuildDirectory=staging/target -DegaAcccession-db.url=${stagingPostgresDbUrl} -DegaAccession-db.username=${postgresDBUserName} -DegaAcccession-db.password=${postgresDBPassword} -Dinstance.id=ega-accession-01-staging -Dddl-behaviour=${params.DbBehaviour}"
+        sh "mvn clean package -DskipTests -DbuildDirectory=staging/target -DegaAccession-db.url=${stagingPostgresDbUrl} -DegaAccession-db.username=${postgresDBUserName} -DegaAccession-db.password=${postgresDBPassword} -Dinstance.id=ega-accession-01-staging -Dddl-behaviour=${params.DbBehaviour}"
       }
     }
     stage('Build For FallBack And Production') {
@@ -35,9 +35,9 @@ pipeline {
        }
       steps {
         echo 'Build pointing to FallBack DB'
-        sh "mvn clean package -DskipTests -DbuildDirectory=fallback/target -DegaAcccession-db.url=${fallBackPostgresDbUrl} -DegaAccession-db.username=${postgresDBUserName} -DegaAcccession-db.password=${postgresDBPassword} -Dinstance.id=ega-accession-01-fallback -Dddl-behaviour=${params.DbBehaviour}"
+        sh "mvn clean package -DskipTests -DbuildDirectory=fallback/target -DegaAccession-db.url=${fallBackPostgresDbUrl} -DegaAccession-db.username=${postgresDBUserName} -DegaAccession-db.password=${postgresDBPassword} -Dinstance.id=ega-accession-01-fallback -Dddl-behaviour=${params.DbBehaviour}"
         echo 'Build pointing to Production DB'
-        sh "mvn clean package -DskipTests -DbuildDirectory=production/target -DegaAcccession-db.url=${productionPostgresDbUrl} -DegaAccession-db.username=${postgresDBUserName} -DegaAcccession-db.password=${postgresDBPassword} -Dinstance.id=ega-accession-01-production -Dddl-behaviour=${params.DbBehaviour}"
+        sh "mvn clean package -DskipTests -DbuildDirectory=production/target -DegaAccession-db.url=${productionPostgresDbUrl} -DegaAccession-db.username=${postgresDBUserName} -DegaAccession-db.password=${postgresDBPassword} -Dinstance.id=ega-accession-01-production -Dddl-behaviour=${params.DbBehaviour}"
        }
      }
     stage('Deploy To Staging') {
