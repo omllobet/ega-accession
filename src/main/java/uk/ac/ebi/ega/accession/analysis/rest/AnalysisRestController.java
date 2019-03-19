@@ -21,13 +21,14 @@ import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
-import uk.ac.ebi.ampt2d.commons.accession.rest.controllers.BasicRestController;
+
 import uk.ac.ebi.ega.accession.analysis.model.Analysis;
+import uk.ac.ebi.ega.accession.rest.EgaBasicRestController;
 
 @RestController
 @RequestMapping(value = "/v1/analysis")
 @Api(tags = "Analysis")
-public class AnalysisRestController extends BasicRestController<AnalysisDTO, Analysis, String, String> {
+public class AnalysisRestController extends EgaBasicRestController<AnalysisDTO, Analysis, String, String> {
 
     public AnalysisRestController(AccessioningService<Analysis, String, String> analysisAccessionService) {
         super(analysisAccessionService, AnalysisDTO::new);

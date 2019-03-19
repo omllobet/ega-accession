@@ -25,9 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import uk.ac.ebi.ampt2d.commons.accession.core.AccessioningService;
-import uk.ac.ebi.ampt2d.commons.accession.core.BasicAccessioningService;
 import uk.ac.ebi.ampt2d.commons.accession.core.DatabaseService;
-import uk.ac.ebi.ampt2d.commons.accession.core.DecoratedAccessioningService;
 import uk.ac.ebi.ampt2d.commons.accession.generators.monotonic.MonotonicAccessionGenerator;
 import uk.ac.ebi.ampt2d.commons.accession.generators.monotonic.MonotonicRange;
 import uk.ac.ebi.ampt2d.commons.accession.hashing.SHA1HashingFunction;
@@ -45,6 +43,8 @@ import uk.ac.ebi.ega.accession.analysis.persistence.HistoricLogAnalysisEntity;
 import uk.ac.ebi.ega.accession.analysis.persistence.HistoricLogAnalysisRepository;
 
 import java.util.Collection;
+import uk.ac.ebi.ega.accession.services.EgaAccessioningService;
+import uk.ac.ebi.ega.accession.services.EgaDecoratedAccessioningService;
 
 @Configuration
 @EntityScan({"uk.ac.ebi.ega.accession.analysis.persistence"})
@@ -74,13 +74,13 @@ public class AnalysisServiceConfiguration {
 
     @Bean
     public AccessioningService<Analysis, String, String> prefixAnalysisAccessionService() {
-        return DecoratedAccessioningService.buildPrefixPaddedLongAccessionService(analysisAccessionService(), PREFIX,
-                PAD_FORMAT, Long::parseLong);
+      return EgaDecoratedAccessioningService.buildPrefixPaddedLongAccessionService(analysisAccessionService(), PREFIX,
+              PAD_FORMAT, Long::parseLong);
     }
 
     @Bean
     public AccessioningService<Analysis, String, Long> analysisAccessionService() {
-        return new BasicAccessioningService<>(
+        return new EgaAccessioningService<>(
                 new MonotonicAccessionGenerator<>(CATEGORY_ID, applicationInstanceId, blockService,
                         monotonicDatabaseService()),
                 analysisAccessioningDatabaseService(),
